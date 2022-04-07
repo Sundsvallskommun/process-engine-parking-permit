@@ -6,6 +6,7 @@ public class CaseObject implements Serializable {
 
     private String processName;
     private String caseNumber;
+    private String processInstanceId;
 
     public String getProcessName() {
         return processName;
@@ -23,4 +24,20 @@ public class CaseObject implements Serializable {
         this.caseNumber = caseNumber;
     }
 
+    public String getProcessInstanceId() {
+        return processInstanceId;
+    }
+
+    public void setProcessInstanceId(String processInstanceId) {
+        this.processInstanceId = processInstanceId;
+    }
+
+    @Override
+    public String toString() {
+        return "CaseObject{" +
+                "processName='" + processName + '\'' +
+                ", caseNumber='" + caseNumber + '\'' +
+                ", processInstanceId='" + processInstanceId + '\'' +
+                '}';
+    }
 }
