@@ -14,7 +14,7 @@ public class CamundaEndpoints {
 
         System.out.println(caseObject);
 
-        return new ResponseEntity<>("Test", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("Test new", HttpStatus.ACCEPTED);
 
     }
 
@@ -23,7 +23,7 @@ public class CamundaEndpoints {
 
         System.out.println(caseObject);
 
-        return new ResponseEntity<>("Test", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("Test update", HttpStatus.ACCEPTED);
 
     }
 }
