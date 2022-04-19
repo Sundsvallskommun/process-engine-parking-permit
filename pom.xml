@@ -47,6 +47,8 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>parkingpermit</finalName>
 	</build>
+
 
 </project>
