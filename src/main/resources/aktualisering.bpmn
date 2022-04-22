@@ -1,38 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_18sc62n" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.10.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
-  <bpmn:process id="Process_1ppz1v4" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_18sc62n" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.0.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="aktualisering" name="Aktualiseringsproess" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Ansökan inkommer">
       <bpmn:outgoing>Flow_10gu3ct</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="Activity_0vibz7n">
+    <bpmn:sequenceFlow id="Flow_10gu3ct" sourceRef="StartEvent_1" targetRef="Activity_0vibz7n" />
+    <bpmn:endEvent id="Event_0zsz3ot" name="Ansökan redo att behandlas">
+      <bpmn:incoming>Flow_115s9j0</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_18iuih2" sourceRef="Activity_0vibz7n" targetRef="Activity_0x8adza" />
+    <bpmn:task id="Activity_0x8adza" name="Kontrollera ansökan">
+      <bpmn:incoming>Flow_18iuih2</bpmn:incoming>
+      <bpmn:outgoing>Flow_0oqhxdt</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0oqhxdt" sourceRef="Activity_0x8adza" targetRef="Activity_1pzj9tr" />
+    <bpmn:task id="Activity_0vibz7n" name="Läs in data">
       <bpmn:incoming>Flow_10gu3ct</bpmn:incoming>
       <bpmn:outgoing>Flow_18iuih2</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_10gu3ct" sourceRef="StartEvent_1" targetRef="Activity_0vibz7n" />
-    <bpmn:endEvent id="Event_0zsz3ot">
-      <bpmn:incoming>Flow_18iuih2</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_18iuih2" sourceRef="Activity_0vibz7n" targetRef="Event_0zsz3ot" />
+    <bpmn:task id="Activity_1pzj9tr" name="Uppdatera status och resultat">
+      <bpmn:incoming>Flow_0oqhxdt</bpmn:incoming>
+      <bpmn:outgoing>Flow_115s9j0</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_115s9j0" sourceRef="Activity_1pzj9tr" targetRef="Event_0zsz3ot" />
+    <bpmn:textAnnotation id="TextAnnotation_0o0jf7r">
+      <bpmn:text>POST med ärendenummmer och namn på process</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1jws5ij" sourceRef="StartEvent_1" targetRef="TextAnnotation_0o0jf7r" />
+    <bpmn:textAnnotation id="TextAnnotation_0pzk0un">
+      <bpmn:text>Använder ärendenummer</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_17dggzr" sourceRef="Activity_0vibz7n" targetRef="TextAnnotation_0pzk0un" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1ppz1v4">
-      <bpmndi:BPMNEdge id="Flow_10gu3ct_di" bpmnElement="Flow_10gu3ct">
-        <di:waypoint x="215" y="117" />
-        <di:waypoint x="270" y="117" />
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="aktualisering">
+      <bpmndi:BPMNEdge id="Flow_115s9j0_di" bpmnElement="Flow_115s9j0">
+        <di:waypoint x="770" y="207" />
+        <di:waypoint x="942" y="207" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0oqhxdt_di" bpmnElement="Flow_0oqhxdt">
+        <di:waypoint x="610" y="207" />
+        <di:waypoint x="670" y="207" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_18iuih2_di" bpmnElement="Flow_18iuih2">
-        <di:waypoint x="370" y="117" />
-        <di:waypoint x="432" y="117" />
+        <di:waypoint x="390" y="207" />
+        <di:waypoint x="510" y="207" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10gu3ct_di" bpmnElement="Flow_10gu3ct">
+        <di:waypoint x="215" y="207" />
+        <di:waypoint x="290" y="207" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="179" y="99" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0vibz7n_di" bpmnElement="Activity_0vibz7n">
-        <dc:Bounds x="270" y="77" width="100" height="80" />
+        <dc:Bounds x="179" y="189" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="172" y="232" width="50" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0zsz3ot_di" bpmnElement="Event_0zsz3ot">
-        <dc:Bounds x="432" y="99" width="36" height="36" />
+        <dc:Bounds x="942" y="189" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="918" y="232" width="84" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0x8adza_di" bpmnElement="Activity_0x8adza">
+        <dc:Bounds x="510" y="167" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0lp0npw_di" bpmnElement="Activity_0vibz7n">
+        <dc:Bounds x="290" y="167" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pzj9tr_di" bpmnElement="Activity_1pzj9tr">
+        <dc:Bounds x="670" y="167" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0o0jf7r_di" bpmnElement="TextAnnotation_0o0jf7r">
+        <dc:Bounds x="220" y="100" width="100" height="68" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0pzk0un_di" bpmnElement="TextAnnotation_0pzk0un">
+        <dc:Bounds x="470" y="80" width="100" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1jws5ij_di" bpmnElement="Association_1jws5ij">
+        <di:waypoint x="208" y="193" />
+        <di:waypoint x="228" y="168" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_17dggzr_di" bpmnElement="Association_17dggzr">
+        <di:waypoint x="390" y="176" />
+        <di:waypoint x="480" y="120" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
