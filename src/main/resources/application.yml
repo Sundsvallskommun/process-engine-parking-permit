@@ -1,2 +1,7 @@
 server:
   port: 8888
+
+openapi:
+  name: parking-permit
+  title: Parking permit
+  version: 0.1
