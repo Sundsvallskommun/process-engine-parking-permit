@@ -38,6 +38,10 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<dependency>
+		<groupId>se.sundsvall.dept44</groupId>
+		<artifactId>dept44-starter-webclient</artifactId>
+	</dependency>
 
 	<build>
 		<plugins>
