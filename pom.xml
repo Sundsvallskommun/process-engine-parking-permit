@@ -37,12 +37,33 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
-	<dependency>
-		<groupId>se.sundsvall.dept44</groupId>
-		<artifactId>dept44-starter-webclient</artifactId>
-	</dependency>
+		<!--Dept44 dependencies-->
+		<dependency>
+			<groupId>se.sundsvall.dept44</groupId>
+			<artifactId>dept44-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>se.sundsvall.dept44</groupId>
+			<artifactId>dept44-starter-webclient</artifactId>
+		</dependency>
+		<!--Camunda dependencies-->
 
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>camunda-bpm-nexus-ee</id>
+			<name>camunda-bpm-nexus</name>
+			<url>
+				https://camunda.jfrog.io/artifactory/private/
+			</url>
+		</repository>
+		<!-- enable this for EE dependencies (requires credentials in ~/.m2/settings.xml)
+            <repository> <id>camunda-bpm-nexus-ee</id> <name>Camunda Enterprise Maven
+            Repository</name> <url>https://app.camunda.com/nexus/content/repositories/camunda-bpm-ee</url>
+            </repository> -->
+	</repositories>
 	<build>
 		<plugins>
 			<plugin>
@@ -52,6 +73,4 @@
 		</plugins>
 		<finalName>parkingpermit</finalName>
 	</build>
-
-
 </project>
