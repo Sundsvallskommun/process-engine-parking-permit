@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +35,7 @@ public class CamundaEndpoints {
         String requestBody = objectMapper.writeValueAsString(parkingPermitRequest);
 
         WebClient webClient = WebClient.builder()
-                        .baseUrl("http://localhost:8080")
+                        .baseUrl("http://localhost:8088/parkingpermit")
                                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                                         .build();
 
