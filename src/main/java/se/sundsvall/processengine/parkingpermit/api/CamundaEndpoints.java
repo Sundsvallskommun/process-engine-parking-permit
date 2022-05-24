@@ -19,35 +19,26 @@ import java.util.Map;
 public class CamundaEndpoints {
 
     @PostMapping("start-process")
-    public ResponseEntity<?> startParkingPermitProcess(@RequestBody CaseObject caseObject) throws JsonProcessingException {
-
+    public ResponseEntity<ParkingPermitResponse> startParkingPermitProcess(@RequestBody CaseObject caseObject) throws JsonProcessingException {
 
         Map<String, CamundaVariable> variables = new HashMap<>();
         CamundaVariable<String> caseNumberVariable = new CamundaVariable<>();
-        caseNumberVariable.setValue("1");
+        caseNumberVariable.setValue(caseObject.getCaseNumber());
         caseNumberVariable.setType("String");
 
-        CamundaVariable<Boolean> testBoolVariable = new CamundaVariable<>();
-        testBoolVariable.setValue(true);
-        testBoolVariable.setType("Boolean");
-
         variables.put("caseNumber",caseNumberVariable);
-        variables.put("booleanTest",testBoolVariable);
 
-        ParkingPermitRequest parkingPermitRequest2 = new ParkingPermitRequest();
-        parkingPermitRequest2.setVariables(variables);
+        ParkingPermitRequest parkingPermitRequest = new ParkingPermitRequest();
+        parkingPermitRequest.setVariables(variables);
 
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String requestBody = objectMapper.writeValueAsString(parkingPermitRequest2);
-
+        String requestBody = objectMapper.writeValueAsString(parkingPermitRequest);
 
         WebClient webClient = WebClient.builder()
                         .baseUrl("http://localhost:8080")
                                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                                         .build();
-
-
 
         Mono<JsonNode> processDefinitionJsonMono = webClient.post()
                 .uri("/engine-rest/process-definition/key/parking-permit/start")
