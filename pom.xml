@@ -42,6 +42,10 @@
 			<groupId>se.sundsvall.dept44</groupId>
 			<artifactId>dept44-starter-webclient</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
 		<!--Camunda dependencies-->
 
 	</dependencies>
