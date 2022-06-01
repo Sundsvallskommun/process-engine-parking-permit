@@ -4,4 +4,4 @@ server:
 openapi:
   name: process-engine
   title: Process Engine
-  version: 0.1
+  version: 1.0
