@@ -32,15 +32,15 @@ public class CamundaEndpoints {
 
     public ResponseEntity<ParkingPermitResponse> startParkingPermitProcess(@RequestBody CaseObject caseObject) throws JsonProcessingException {
 
-        Map<String, CamundaVariable> variables = new HashMap<>();
+        Map<String, CamundaVariable<?>> camundaVariables = new HashMap<>();
         CamundaVariable<String> caseNumberVariable = new CamundaVariable<>();
         caseNumberVariable.setValue(caseObject.getCaseNumber());
         caseNumberVariable.setType("String");
 
-        variables.put("caseNumber",caseNumberVariable);
+        camundaVariables.put("caseNumber",caseNumberVariable);
 
         ParkingPermitRequest parkingPermitRequest = new ParkingPermitRequest();
-        parkingPermitRequest.setVariables(variables);
+        parkingPermitRequest.setVariables(camundaVariables);
 
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -68,11 +68,12 @@ public class CamundaEndpoints {
     }
 
     @PostMapping("update-process")
-    public ResponseEntity<?> updateParkingPermitProcess(@RequestBody CaseObject caseObject){
+    public ResponseEntity<ParkingPermitResponse> updateParkingPermitProcess(@RequestBody CaseObject caseObject){
 
-        System.out.println(caseObject);
+        ParkingPermitResponse parkingPermitResponse = new ParkingPermitResponse();
+        parkingPermitResponse.setProcessId(caseObject.getProcessInstanceId());
 
-        return new ResponseEntity<>("Test update", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(parkingPermitResponse, HttpStatus.ACCEPTED);
 
     }
 }
