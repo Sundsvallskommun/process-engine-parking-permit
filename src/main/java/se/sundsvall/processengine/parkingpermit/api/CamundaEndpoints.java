@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,12 @@ import java.util.Map;
 @RestController
 @RequestMapping("process-engine")
 public class CamundaEndpoints {
+
+    private String camundaUrl;
+
+    public CamundaEndpoints(@Value("${camunda:endpoint}") String camundaUrl){
+        this.camundaUrl = camundaUrl;
+    }
 
     @PostMapping(path = "start-process",
             consumes = MediaType.APPLICATION_JSON_VALUE,
