@@ -24,7 +24,7 @@ public class CamundaEndpoints {
 
     private String camundaUrl;
 
-    public CamundaEndpoints(@Value("${camunda:endpoint}") String camundaUrl){
+    public CamundaEndpoints(@Value("${camunda.endpoint}") String camundaUrl){
         this.camundaUrl = camundaUrl;
     }
 
@@ -53,7 +53,7 @@ public class CamundaEndpoints {
         String requestBody = objectMapper.writeValueAsString(parkingPermitRequest);
 
         WebClient webClient = WebClient.builder()
-                        .baseUrl("http://localhost:8088/parkingpermit")
+                        .baseUrl(camundaUrl)
                                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                                         .build();
 
