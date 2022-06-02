@@ -24,7 +24,6 @@ public class CamundaEndpoints {
     @PostMapping(path = "start-process",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-
     @Operation(description = "Start a new process instance with the given process name")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ParkingPermitResponse.class)))
@@ -67,7 +66,10 @@ public class CamundaEndpoints {
 
     }
 
-    @PostMapping("update-process")
+    @PostMapping(path = "update-process",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(description = "Update a process instance with the given process instance ID")
     public ResponseEntity<ParkingPermitResponse> updateParkingPermitProcess(@RequestBody CaseObject caseObject){
 
         ParkingPermitResponse parkingPermitResponse = new ParkingPermitResponse();
