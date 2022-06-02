@@ -3,6 +3,12 @@ package se.sundsvall.processengine.parkingpermit.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,44 +16,46 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-
 import java.util.HashMap;
 import java.util.Map;
-
 @RestController
 @RequestMapping("process-engine")
 public class CamundaEndpoints {
 
-    @PostMapping("start-process")
-    public ResponseEntity<?> startParkingPermitProcess(@RequestBody CaseObject caseObject) throws JsonProcessingException {
+    private String camundaUrl;
 
+    public CamundaEndpoints(@Value("${camunda.endpoint}") String camundaUrl){
+        this.camundaUrl = camundaUrl;
+    }
 
-        Map<String, CamundaVariable> variables = new HashMap<>();
+    @PostMapping(path = "start-process",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(description = "Start a new process instance with the given process name")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ParkingPermitResponse.class)))
+    })
+
+    public ResponseEntity<ParkingPermitResponse> startParkingPermitProcess(@RequestBody CaseObject caseObject) throws JsonProcessingException {
+
+        Map<String, CamundaVariable<?>> camundaVariables = new HashMap<>();
         CamundaVariable<String> caseNumberVariable = new CamundaVariable<>();
-        caseNumberVariable.setValue("1");
+        caseNumberVariable.setValue(caseObject.getCaseNumber());
         caseNumberVariable.setType("String");
 
-        CamundaVariable<Boolean> testBoolVariable = new CamundaVariable<>();
-        testBoolVariable.setValue(true);
-        testBoolVariable.setType("Boolean");
+        camundaVariables.put("caseNumber",caseNumberVariable);
 
-        variables.put("caseNumber",caseNumberVariable);
-        variables.put("booleanTest",testBoolVariable);
-
-        ParkingPermitRequest parkingPermitRequest2 = new ParkingPermitRequest();
-        parkingPermitRequest2.setVariables(variables);
+        ParkingPermitRequest parkingPermitRequest = new ParkingPermitRequest();
+        parkingPermitRequest.setVariables(camundaVariables);
 
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String requestBody = objectMapper.writeValueAsString(parkingPermitRequest2);
-
+        String requestBody = objectMapper.writeValueAsString(parkingPermitRequest);
 
         WebClient webClient = WebClient.builder()
-                        .baseUrl("http://localhost:8080")
+                        .baseUrl(camundaUrl)
                                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                                         .build();
-
-
 
         Mono<JsonNode> processDefinitionJsonMono = webClient.post()
                 .uri("/engine-rest/process-definition/key/parking-permit/start")
@@ -65,12 +73,16 @@ public class CamundaEndpoints {
 
     }
 
-    @PostMapping("update-process")
-    public ResponseEntity<?> updateParkingPermitProcess(@RequestBody CaseObject caseObject){
+    @PostMapping(path = "update-process",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(description = "Update a process instance with the given process instance ID")
+    public ResponseEntity<ParkingPermitResponse> updateParkingPermitProcess(@RequestBody CaseObject caseObject){
 
-        System.out.println(caseObject);
+        ParkingPermitResponse parkingPermitResponse = new ParkingPermitResponse();
+        parkingPermitResponse.setProcessId(caseObject.getProcessInstanceId());
 
-        return new ResponseEntity<>("Test update", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(parkingPermitResponse, HttpStatus.ACCEPTED);
 
     }
 }
