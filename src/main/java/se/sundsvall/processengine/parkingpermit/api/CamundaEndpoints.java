@@ -38,6 +38,9 @@ public class CamundaEndpoints {
 
     public ResponseEntity<ParkingPermitResponse> startParkingPermitProcess(@RequestBody CaseObject caseObject) throws JsonProcessingException {
 
+        System.out.println("We are in start process api endpoint!");
+        System.out.println("URL to camunda is " + camundaUrl);
+
         Map<String, CamundaVariable<?>> camundaVariables = new HashMap<>();
         CamundaVariable<String> caseNumberVariable = new CamundaVariable<>();
         caseNumberVariable.setValue(caseObject.getCaseNumber());
@@ -65,6 +68,8 @@ public class CamundaEndpoints {
                 .bodyToMono(JsonNode.class);
 
         JsonNode jsonNode = processDefinitionJsonMono.block();
+        System.out.println("JsonNode is " + jsonNode.toPrettyString());
+
         String processId = jsonNode.path("id").asText();
         ParkingPermitResponse parkingPermitResponse = new ParkingPermitResponse();
         parkingPermitResponse.setProcessId(processId);
