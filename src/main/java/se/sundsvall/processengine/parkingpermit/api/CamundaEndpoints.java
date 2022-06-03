@@ -3,6 +3,7 @@ package se.sundsvall.processengine.parkingpermit.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.netty.handler.logging.LogLevel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -10,12 +11,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import reactor.netty.http.client.HttpClient;
+import reactor.netty.transport.logging.AdvancedByteBufFormat;
+
 import java.util.HashMap;
 import java.util.Map;
 @RestController
@@ -58,6 +63,9 @@ public class CamundaEndpoints {
         WebClient webClient = WebClient.builder()
                         .baseUrl(camundaUrl)
                                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .clientConnector(new ReactorClientHttpConnector(
+                        HttpClient.create().wiretap(this.getClass().getCanonicalName(), LogLevel.DEBUG, AdvancedByteBufFormat.TEXTUAL)
+                ))
                                         .build();
 
         Mono<JsonNode> processDefinitionJsonMono = webClient.post()
@@ -68,7 +76,7 @@ public class CamundaEndpoints {
                 .bodyToMono(JsonNode.class);
 
         JsonNode jsonNode = processDefinitionJsonMono.block();
-        System.out.println("JsonNode is " + jsonNode.toPrettyString());
+    //    System.out.println("JsonNode is " + jsonNode.toPrettyString());
 
         String processId = jsonNode.path("id").asText();
         ParkingPermitResponse parkingPermitResponse = new ParkingPermitResponse();
