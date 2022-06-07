@@ -3,7 +3,6 @@ package se.sundsvall.processengine.parkingpermit.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.netty.handler.logging.LogLevel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -11,20 +10,21 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
-import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import reactor.netty.http.client.HttpClient;
-import reactor.netty.transport.logging.AdvancedByteBufFormat;
+import se.sundsvall.processengine.parkingpermit.api.model.CamundaVariable;
+import se.sundsvall.processengine.parkingpermit.api.model.CaseObject;
+import se.sundsvall.processengine.parkingpermit.api.model.ParkingPermitRequest;
+import se.sundsvall.processengine.parkingpermit.api.model.ParkingPermitResponse;
 
 import java.util.HashMap;
 import java.util.Map;
 @RestController
-@RequestMapping("process-engine")
+@RequestMapping("process")
 public class CamundaEndpoints {
 
     private String camundaUrl;

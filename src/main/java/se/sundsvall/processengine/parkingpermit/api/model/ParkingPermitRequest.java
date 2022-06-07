@@ -1,4 +1,4 @@
-package se.sundsvall.processengine.parkingpermit.api;
+package se.sundsvall.processengine.parkingpermit.api.model;
 
 import java.io.Serial;
 import java.io.Serializable;
