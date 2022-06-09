@@ -74,7 +74,7 @@ public class CamundaEndpoints {
         ParkingPermitResponse parkingPermitResponse = new ParkingPermitResponse();
         parkingPermitResponse.setProcessId(processId);
 
-        return new ResponseEntity<>(parkingPermitResponse, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(parkingPermitResponse, HttpStatus.OK);
     }
 
     @PostMapping(path = "update-process",
@@ -86,7 +86,7 @@ public class CamundaEndpoints {
         ParkingPermitResponse parkingPermitResponse = new ParkingPermitResponse();
         parkingPermitResponse.setProcessId(caseObject.getProcessInstanceId());
 
-        return new ResponseEntity<>(parkingPermitResponse, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(parkingPermitResponse, HttpStatus.OK);
 
     }
 }
