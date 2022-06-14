@@ -23,6 +23,8 @@ import se.sundsvall.processengine.parkingpermit.api.model.ParkingPermitResponse;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("process")
 public class CamundaEndpoints {
@@ -69,7 +71,8 @@ public class CamundaEndpoints {
                 .retrieve()
                 .bodyToMono(JsonNode.class);
 
-        JsonNode jsonNode = processDefinitionJsonMono.block();
+        Optional<JsonNode> jsonNodeOptional = processDefinitionJsonMono.blockOptional();
+        JsonNode jsonNode = jsonNodeOptional.orElseThrow( () -> new RuntimeException("Could not get json response from Camunda") );
         String processId = jsonNode.path("id").asText();
         ParkingPermitResponse parkingPermitResponse = new ParkingPermitResponse();
         parkingPermitResponse.setProcessId(processId);
