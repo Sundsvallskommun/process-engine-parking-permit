@@ -27,11 +27,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("process")
-public class CamundaEndpoints {
+public class CamundaProcessEndpoints {
 
     private String camundaUrl;
 
-    public CamundaEndpoints(@Value("${camunda.endpoint}") String camundaUrl){
+    public CamundaProcessEndpoints(@Value("${camunda.endpoint}") String camundaUrl){
         this.camundaUrl = camundaUrl;
     }
 
@@ -42,7 +42,6 @@ public class CamundaEndpoints {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ParkingPermitResponse.class)))
     })
-
     public ResponseEntity<ParkingPermitResponse> startParkingPermitProcess(@RequestBody CaseObject caseObject) throws JsonProcessingException {
 
         Map<String, CamundaVariable<?>> camundaVariables = new HashMap<>();
