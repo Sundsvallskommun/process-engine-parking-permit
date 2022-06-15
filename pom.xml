@@ -47,7 +47,11 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 		<!--Camunda dependencies-->
-
+		<dependency>
+			<groupId>org.camunda.bpm.springboot</groupId>
+			<artifactId>camunda-bpm-spring-boot-starter-external-task-client</artifactId>
+			<version>7.17.0</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>
