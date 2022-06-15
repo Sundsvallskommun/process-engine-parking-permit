@@ -4,10 +4,10 @@ import org.camunda.bpm.client.spring.annotation.ExternalTaskSubscription;
 import org.camunda.bpm.client.task.ExternalTask;
 import org.camunda.bpm.client.task.ExternalTaskHandler;
 import org.camunda.bpm.client.task.ExternalTaskService;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import se.sundsvall.processengine.parkingpermit.integration.casedata.ErrandsClient;
 
-@Configuration
+@Component
 @ExternalTaskSubscription("caseData")
 public class CaseDataWorker implements ExternalTaskHandler {
 
@@ -20,12 +20,12 @@ public class CaseDataWorker implements ExternalTaskHandler {
     @Override
     public void execute(ExternalTask externalTask, ExternalTaskService externalTaskService) {
 
-        String caseId = externalTask.getVariable("caseId");
+        String caseId = externalTask.getVariable("caseNumber");
 
         String errandString = errandsClient.getErrandById(caseId);
 
         System.out.println(errandString);
-        
+
         externalTaskService.complete(externalTask);
     }
 }
