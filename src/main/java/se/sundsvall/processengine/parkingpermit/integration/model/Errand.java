@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Data;
+import lombok.ToString;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -36,6 +38,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "updated"
 })
 @Generated("jsonschema2pojo")
+@Data
+@ToString
 public class Errand {
 
     @JsonProperty("id")
@@ -44,6 +48,8 @@ public class Errand {
     public String externalCaseId;
     @JsonProperty("caseType")
     public String caseType;
+    @JsonProperty("processId")
+    public String processid;
     @JsonProperty("priority")
     public String priority;
     @JsonProperty("description")

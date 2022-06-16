@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Data;
+import lombok.ToString;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -26,6 +28,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "updated"
 })
 @Generated("jsonschema2pojo")
+@Data
+@ToString
 public class Attachment {
 
     @JsonProperty("id")
@@ -41,6 +45,7 @@ public class Attachment {
     @JsonProperty("mimeType")
     public String mimeType;
     @JsonProperty("file")
+    @ToString.Exclude
     public String file;
     @JsonProperty("extraParameters")
     public ExtraParameters extraParameters;
