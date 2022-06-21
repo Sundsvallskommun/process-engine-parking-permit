@@ -1,9 +1,10 @@
 
-package se.sundsvall.processengine.parkingpermit.integration.model;
+package se.sundsvall.processengine.parkingpermit.integration.casedata.model;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -95,6 +96,15 @@ public class Errand {
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
+    }
+
+    public List<Errand> findErrandsByCaseType(List<Errand> errandsList, List<String> caseTypesList){
+
+        List<Errand> foundErrandsList = errandsList.stream()
+                .filter(errand -> caseTypesList.contains(errand.getCaseType()))
+                .collect(Collectors.toList());
+
+        return foundErrandsList;
     }
 
 }

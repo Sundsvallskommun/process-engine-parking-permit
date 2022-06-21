@@ -1,7 +1,8 @@
 
-package se.sundsvall.processengine.parkingpermit.integration.model;
+package se.sundsvall.processengine.parkingpermit.integration.casedata.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -16,11 +17,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "id",
-    "description",
-    "address",
-    "facilityCollectionName",
-    "mainFacility",
-    "facilityType",
+    "attachments",
     "extraParameters",
     "version",
     "created",
@@ -29,20 +26,12 @@ import lombok.ToString;
 @Generated("jsonschema2pojo")
 @Data
 @ToString
-public class Facility {
+public class Appeal {
 
     @JsonProperty("id")
     public Integer id;
-    @JsonProperty("description")
-    public String description;
-    @JsonProperty("address")
-    public Address address;
-    @JsonProperty("facilityCollectionName")
-    public String facilityCollectionName;
-    @JsonProperty("mainFacility")
-    public Boolean mainFacility;
-    @JsonProperty("facilityType")
-    public String facilityType;
+    @JsonProperty("attachments")
+    public List<Attachment> attachments = null;
     @JsonProperty("extraParameters")
     public ExtraParameters extraParameters;
     @JsonProperty("version")

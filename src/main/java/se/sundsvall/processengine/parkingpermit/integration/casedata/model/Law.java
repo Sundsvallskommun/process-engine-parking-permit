@@ -1,5 +1,5 @@
 
-package se.sundsvall.processengine.parkingpermit.integration.model;
+package se.sundsvall.processengine.parkingpermit.integration.casedata.model;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,18 +15,24 @@ import lombok.ToString;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "contactType",
-    "value"
+    "heading",
+    "sfs",
+    "chapter",
+    "article"
 })
 @Generated("jsonschema2pojo")
 @Data
 @ToString
-public class ContactInformation {
+public class Law {
 
-    @JsonProperty("contactType")
-    public String contactType;
-    @JsonProperty("value")
-    public String value;
+    @JsonProperty("heading")
+    public String heading;
+    @JsonProperty("sfs")
+    public String sfs;
+    @JsonProperty("chapter")
+    public String chapter;
+    @JsonProperty("article")
+    public String article;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 

@@ -1,8 +1,7 @@
 
-package se.sundsvall.processengine.parkingpermit.integration.model;
+package se.sundsvall.processengine.parkingpermit.integration.casedata.model;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -17,37 +16,33 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "id",
-    "type",
-    "roles",
-    "addresses",
-    "contactInformation",
+    "description",
+    "address",
+    "facilityCollectionName",
+    "mainFacility",
+    "facilityType",
     "extraParameters",
     "version",
     "created",
-    "updated",
-    "organizationName",
-    "organizationNumber",
-    "authorizedSignatory",
-    "firstName",
-    "lastName",
-    "personId",
-    "personalNumber"
+    "updated"
 })
 @Generated("jsonschema2pojo")
 @Data
 @ToString
-public class Stakeholder {
+public class Facility {
 
     @JsonProperty("id")
     public Integer id;
-    @JsonProperty("type")
-    public String type;
-    @JsonProperty("roles")
-    public List<String> roles = null;
-    @JsonProperty("addresses")
-    public List<Address> addresses = null;
-    @JsonProperty("contactInformation")
-    public List<ContactInformation> contactInformation = null;
+    @JsonProperty("description")
+    public String description;
+    @JsonProperty("address")
+    public Address address;
+    @JsonProperty("facilityCollectionName")
+    public String facilityCollectionName;
+    @JsonProperty("mainFacility")
+    public Boolean mainFacility;
+    @JsonProperty("facilityType")
+    public String facilityType;
     @JsonProperty("extraParameters")
     public ExtraParameters extraParameters;
     @JsonProperty("version")
@@ -56,20 +51,6 @@ public class Stakeholder {
     public String created;
     @JsonProperty("updated")
     public String updated;
-    @JsonProperty("organizationName")
-    public String organizationName;
-    @JsonProperty("organizationNumber")
-    public String organizationNumber;
-    @JsonProperty("authorizedSignatory")
-    public String authorizedSignatory;
-    @JsonProperty("firstName")
-    public String firstName;
-    @JsonProperty("lastName")
-    public String lastName;
-    @JsonProperty("personId")
-    public String personId;
-    @JsonProperty("personalNumber")
-    public String personalNumber;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
