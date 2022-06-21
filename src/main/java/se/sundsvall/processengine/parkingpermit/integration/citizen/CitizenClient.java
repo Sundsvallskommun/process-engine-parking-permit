@@ -2,11 +2,13 @@ package se.sundsvall.processengine.parkingpermit.integration.citizen;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import se.sundsvall.dept44.configuration.webclient.WebClientBuilder;
 
 import java.util.Optional;
 
+@Service
 public class CitizenClient {
 
     private String citizenUrl;
