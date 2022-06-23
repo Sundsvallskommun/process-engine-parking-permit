@@ -3,7 +3,8 @@ COPY src /usr/src/app/src
 COPY pom.xml /usr/src/app
 WORKDIR /usr/src/app
 ARG CAMUNDA_ENDPOINT=http://localhost:8088/parkingpermit
-RUN --mount=type=secret,id=mvnsettings,target=/home/jenkins/.m2/settings.xml mvn clean package -X
+RUN --mount=type=secret,id=mvnsettings,target=/home/jenkins/.m2/settings.xml mvn clean package -X \
+    cat /home/jenkins/.m2/settings.xml
 
 FROM openjdk:17-jdk-alpine
 COPY --from=build /usr/src/app/target/parkingpermit.jar parkingpermit.jar
