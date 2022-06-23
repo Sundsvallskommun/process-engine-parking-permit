@@ -8,3 +8,9 @@ openapi:
   name: process-engine
   title: Process Engine
   version: 1.0
+
+camunda.bpm.client:
+  base-url: ${camunda.rest.url}
+  subscriptions:
+    caseData:
+      process-definition-key: aktualisering
