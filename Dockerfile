@@ -1,8 +1,10 @@
 FROM maven:3.8.3-openjdk-17 AS build
 COPY src /usr/src/app/src  
 COPY pom.xml /usr/src/app
+COPY /home/jenkins/.m2/settings.xml /root/.m2/settings.xml
 WORKDIR /usr/src/app
-RUN --mount=type=secret,id=mvnsettings,required=true,target=/root/.m2/settings.xml cat /root/.m2/settings.xml
+RUN cat /root/.m2/settings.xml
+RUN mvn clean package
 
 FROM openjdk:17-jdk-alpine
 COPY --from=build /usr/src/app/target/parkingpermit.jar parkingpermit.jar
