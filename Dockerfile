@@ -13,6 +13,8 @@ ARG CITIZEN_URL
 ARG OAUTH2_CLIENT_KEY
 ARG OAUTH2_CLIENT_SECRET
 
+RUN echo "Testar: $CAMUNDA_ENDPOINT"
+
 RUN mvn clean package
 
 FROM openjdk:17-jdk-alpine
