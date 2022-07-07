@@ -4,6 +4,15 @@ COPY /jenkins/workspace/Parking_Permit_Staging/pom.xml /usr/src/app
 COPY /.m2/settings.xml /root/.m2/settings.xml
 WORKDIR /usr/src/app
 RUN cat /root/.m2/settings.xml
+
+ARG CAMUNDA_ENDPOINT
+ARG CAMUNDA_REST_URL
+ARG OAUTH2_TOKEN_URL
+ARG CASEDATA_ERRANDS_URL
+ARG CITIZEN_URL
+ARG OAUTH2_CLIENT_KEY
+ARG OAUTH2_CLIENT_SECRET
+
 RUN mvn clean package
 
 FROM openjdk:17-jdk-alpine
