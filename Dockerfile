@@ -1,6 +1,6 @@
 FROM maven:3.8.3-openjdk-17 AS build
-COPY src /usr/src/app/src  
-COPY pom.xml /usr/src/app
+COPY /jenkins/workspace/Parking_Permit_Staging/src /usr/src/app/src
+COPY /jenkins/workspace/Parking_Permit_Staging/pom.xml /usr/src/app
 COPY /.m2/settings.xml /root/.m2/settings.xml
 WORKDIR /usr/src/app
 RUN cat /root/.m2/settings.xml
