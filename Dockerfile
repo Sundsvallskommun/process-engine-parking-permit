@@ -4,7 +4,7 @@ COPY /jenkins/workspace/Parking_Permit_Staging/pom.xml /usr/src/app
 COPY /.m2/settings.xml /root/.m2/settings.xml
 WORKDIR /usr/src/app
 RUN cat /root/.m2/settings.xml
-
+#These are only used so the tests that gets run in mvn package can resolve the placeholders
 ARG CAMUNDA_ENDPOINT
 ARG CAMUNDA_REST_URL
 ARG OAUTH2_TOKEN_URL
@@ -12,8 +12,6 @@ ARG CASEDATA_ERRANDS_URL
 ARG CITIZEN_URL
 ARG OAUTH2_CLIENT_KEY
 ARG OAUTH2_CLIENT_SECRET
-
-RUN echo "Testar: $CAMUNDA_ENDPOINT"
 
 RUN mvn clean package
 
