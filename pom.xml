@@ -46,6 +46,10 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>se.sundsvall.dept44</groupId>
+			<artifactId>dept44-common-validators</artifactId>
+		</dependency>
 		<!--Camunda dependencies-->
 		<dependency>
 			<groupId>org.camunda.bpm.springboot</groupId>
