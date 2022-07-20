@@ -8,10 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
-import se.sundsvall.casedata.integration.db.model.enums.CaseType;
-import se.sundsvall.casedata.integration.db.model.enums.Priority;
 import se.sundsvall.processengine.parkingpermit.integration.casedata.enums.Priority;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;

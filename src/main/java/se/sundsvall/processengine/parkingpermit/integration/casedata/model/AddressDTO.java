@@ -1,6 +1,5 @@
 package se.sundsvall.processengine.parkingpermit.integration.casedata.model;
 
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;

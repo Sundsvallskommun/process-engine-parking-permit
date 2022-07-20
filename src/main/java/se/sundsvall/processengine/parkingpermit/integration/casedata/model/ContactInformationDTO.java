@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import se.sundsvall.casedata.integration.db.model.enums.ContactType;
 import se.sundsvall.processengine.parkingpermit.integration.casedata.enums.ContactType;
 
 @Data

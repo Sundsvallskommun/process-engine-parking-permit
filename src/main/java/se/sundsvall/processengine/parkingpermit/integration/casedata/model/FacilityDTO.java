@@ -6,9 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import se.sundsvall.casedata.integration.db.model.enums.FacilityType;
 import se.sundsvall.processengine.parkingpermit.integration.casedata.enums.FacilityType;
-
 import javax.validation.Valid;
 import java.time.OffsetDateTime;
 import java.util.HashMap;

@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
-
 import javax.validation.constraints.NotBlank;
 
 @Data
