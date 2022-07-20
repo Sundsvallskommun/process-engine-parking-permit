@@ -20,33 +20,22 @@ public class AttachmentDTO {
 
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
-
-    @Enumerated(EnumType.STRING)
     private AttachmentCategory category;
-
     @Length(max = 255)
     private String name;
-
     @Length(max = 1000)
     private String note;
-
     @Length(max = 255)
     private String extension;
-
     @Length(max = 255)
     private String mimeType;
-
     private String file;
-
     private Map<String, String> extraParameters = new HashMap<>();
-
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private int version;
-
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime created;
-
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime updated;

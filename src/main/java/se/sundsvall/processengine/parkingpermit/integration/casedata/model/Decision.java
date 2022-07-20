@@ -2,65 +2,32 @@ package se.sundsvall.processengine.parkingpermit.integration.casedata.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
-import se.sundsvall.casedata.integration.db.model.enums.DecisionType;
 import se.sundsvall.processengine.parkingpermit.integration.casedata.enums.DecisionType;
-
-import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.*;
 
-@Entity
-@Audited
 @Getter
 @Setter
 public class Decision {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Enumerated(EnumType.STRING)
     private DecisionType decisionType;
-
-    @Column(length = 1000)
     private String description;
-
-    @ElementCollection
-    @OrderColumn
     private List<Law> law = new ArrayList<>();
-
-    @OneToOne(cascade = CascadeType.ALL)
     private Stakeholder decidedBy;
-
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime decidedAt;
-
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime validFrom;
-
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime validTo;
-
-    @OneToOne(cascade = CascadeType.ALL)
     private Appeal appeal;
-
-    @OneToMany(cascade = CascadeType.ALL)
     private List<Attachment> attachments = new ArrayList<>();
-
-    @ElementCollection
-    @OrderColumn
     private Map<String, String> extraParameters = new HashMap<>();
-
-    @Version
     private int version;
-    @CreationTimestamp
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime created;
-    @UpdateTimestamp
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime updated;
 

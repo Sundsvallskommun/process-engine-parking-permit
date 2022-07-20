@@ -7,11 +7,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
-import se.sundsvall.casedata.integration.db.model.enums.StakeholderRole;
-import se.sundsvall.casedata.integration.db.model.enums.StakeholderType;
 import se.sundsvall.processengine.parkingpermit.integration.casedata.enums.StakeholderRole;
 import se.sundsvall.processengine.parkingpermit.integration.casedata.enums.StakeholderType;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
