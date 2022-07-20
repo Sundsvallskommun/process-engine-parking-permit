@@ -1,77 +1,99 @@
-
 package se.sundsvall.processengine.parkingpermit.integration.casedata.model;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.Generated;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
+import org.springframework.format.annotation.DateTimeFormat;
+import se.sundsvall.casedata.integration.db.model.enums.DecisionType;
+import se.sundsvall.processengine.parkingpermit.integration.casedata.enums.DecisionType;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "id",
-    "text",
-    "description",
-    "law",
-    "decidedAt",
-    "validFrom",
-    "validTo",
-    "appeal",
-    "attachments",
-    "extraParameters",
-    "version",
-    "created",
-    "updated"
-})
-@Generated("jsonschema2pojo")
-@Data
-@ToString
+import javax.persistence.*;
+import java.time.OffsetDateTime;
+import java.util.*;
+
+@Entity
+@Audited
+@Getter
+@Setter
 public class Decision {
 
-    @JsonProperty("id")
-    public Integer id;
-    @JsonProperty("text")
-    public String text;
-    @JsonProperty("description")
-    public String description;
-    @JsonProperty("law")
-    public List<Law> law = null;
-    @JsonProperty("decidedAt")
-    public String decidedAt;
-    @JsonProperty("validFrom")
-    public String validFrom;
-    @JsonProperty("validTo")
-    public String validTo;
-    @JsonProperty("appeal")
-    public Appeal appeal;
-    @JsonProperty("attachments")
-    public List<Attachment> attachments = null;
-    @JsonProperty("extraParameters")
-    public ExtraParameters extraParameters;
-    @JsonProperty("version")
-    public Integer version;
-    @JsonProperty("created")
-    public String created;
-    @JsonProperty("updated")
-    public String updated;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+    @Enumerated(EnumType.STRING)
+    private DecisionType decisionType;
+
+    @Column(length = 1000)
+    private String description;
+
+    @ElementCollection
+    @OrderColumn
+    private List<Law> law = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Stakeholder decidedBy;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private OffsetDateTime decidedAt;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private OffsetDateTime validFrom;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private OffsetDateTime validTo;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Appeal appeal;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Attachment> attachments = new ArrayList<>();
+
+    @ElementCollection
+    @OrderColumn
+    private Map<String, String> extraParameters = new HashMap<>();
+
+    @Version
+    private int version;
+    @CreationTimestamp
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private OffsetDateTime created;
+    @UpdateTimestamp
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private OffsetDateTime updated;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Decision)) return false;
+        Decision decision = (Decision) o;
+        return decisionType == decision.decisionType && Objects.equals(description, decision.description) && Objects.equals(law, decision.law) && Objects.equals(decidedBy, decision.decidedBy) && Objects.equals(decidedAt, decision.decidedAt) && Objects.equals(validFrom, decision.validFrom) && Objects.equals(validTo, decision.validTo) && Objects.equals(appeal, decision.appeal) && Objects.equals(attachments, decision.attachments) && Objects.equals(extraParameters, decision.extraParameters);
     }
 
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
+    @Override
+    public int hashCode() {
+        return Objects.hash(decisionType, description, law, decidedBy, decidedAt, validFrom, validTo, appeal, attachments, extraParameters);
     }
 
+    @Override
+    public String toString() {
+        return "Decision{" +
+                "id=" + id +
+                ", decisionType=" + decisionType +
+                ", description='" + description + '\'' +
+                ", law=" + law +
+                ", decidedBy=" + decidedBy +
+                ", decidedAt=" + decidedAt +
+                ", validFrom=" + validFrom +
+                ", validTo=" + validTo +
+                ", appeal=" + appeal +
+                ", attachments=" + attachments +
+                ", extraParameters=" + extraParameters +
+                ", version=" + version +
+                ", created=" + created +
+                ", updated=" + updated +
+                '}';
+    }
 }

@@ -1,71 +1,69 @@
-
 package se.sundsvall.processengine.parkingpermit.integration.casedata.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
+import org.springframework.format.annotation.DateTimeFormat;
+import se.sundsvall.casedata.integration.db.model.enums.AttachmentCategory;
+import se.sundsvall.processengine.parkingpermit.integration.casedata.enums.AttachmentCategory;
+
+import javax.persistence.*;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.Generated;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.Data;
-import lombok.ToString;
+import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "id",
-    "category",
-    "name",
-    "note",
-    "extension",
-    "mimeType",
-    "file",
-    "extraParameters",
-    "version",
-    "created",
-    "updated"
-})
-@Generated("jsonschema2pojo")
-@Data
+@Entity
+@Audited
+@Getter
+@Setter
 @ToString
 public class Attachment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @JsonProperty("id")
-    public Integer id;
-    @JsonProperty("category")
-    public String category;
-    @JsonProperty("name")
-    public String name;
-    @JsonProperty("note")
-    public String note;
-    @JsonProperty("extension")
-    public String extension;
-    @JsonProperty("mimeType")
-    public String mimeType;
-    @JsonProperty("file")
-    @ToString.Exclude
-    public String file;
-    @JsonProperty("extraParameters")
-    public ExtraParameters extraParameters;
-    @JsonProperty("version")
-    public Integer version;
-    @JsonProperty("created")
-    public String created;
-    @JsonProperty("updated")
-    public String updated;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    @Enumerated(EnumType.STRING)
+    private AttachmentCategory category;
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+    private String name;
+
+    @Column(length = 1000)
+    private String note;
+
+    private String extension;
+
+    private String mimeType;
+
+    @Lob
+    private String file;
+
+    @ElementCollection
+    @OrderColumn
+    private Map<String, String> extraParameters = new HashMap<>();
+
+    @Version
+    private int version;
+    @CreationTimestamp
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private OffsetDateTime created;
+    @UpdateTimestamp
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private OffsetDateTime updated;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Attachment)) return false;
+        Attachment that = (Attachment) o;
+        return category == that.category && Objects.equals(name, that.name) && Objects.equals(note, that.note) && Objects.equals(extension, that.extension) && Objects.equals(mimeType, that.mimeType) && Objects.equals(file, that.file) && Objects.equals(extraParameters, that.extraParameters);
     }
 
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
+    @Override
+    public int hashCode() {
+        return Objects.hash(category, name, note, extension, mimeType, file, extraParameters);
     }
-
 }

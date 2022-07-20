@@ -6,7 +6,6 @@ import org.camunda.bpm.client.task.ExternalTaskHandler;
 import org.camunda.bpm.client.task.ExternalTaskService;
 import org.springframework.stereotype.Component;
 import se.sundsvall.processengine.parkingpermit.integration.casedata.ErrandsClient;
-import se.sundsvall.processengine.parkingpermit.integration.casedata.model.Errand;
 import se.sundsvall.processengine.parkingpermit.integration.citizen.CitizenClient;
 import java.util.*;
 

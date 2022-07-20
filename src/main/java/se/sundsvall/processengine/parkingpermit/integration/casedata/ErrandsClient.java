@@ -6,7 +6,6 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import se.sundsvall.dept44.configuration.webclient.WebClientBuilder;
-import se.sundsvall.processengine.parkingpermit.integration.casedata.model.Errand;
 
 import java.util.List;
 
