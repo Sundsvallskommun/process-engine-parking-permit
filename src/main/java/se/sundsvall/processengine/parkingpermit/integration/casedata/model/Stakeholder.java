@@ -9,6 +9,7 @@ import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 import se.sundsvall.processengine.parkingpermit.integration.casedata.enums.StakeholderRole;
 import se.sundsvall.processengine.parkingpermit.integration.casedata.enums.StakeholderType;
+import se.sundsvall.processengine.parkingpermit.integration.citizen.Address;
 
 import java.time.OffsetDateTime;
 import java.util.*;
@@ -29,6 +30,7 @@ public abstract class Stakeholder {
     private List<Address> addresses = new ArrayList<>();
     private List<ContactInformation> contactInformation = new ArrayList<>();
     private Map<String, String> extraParameters = new HashMap<>();
+
     private int version;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime created;
