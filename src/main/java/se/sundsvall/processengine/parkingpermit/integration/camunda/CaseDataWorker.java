@@ -34,13 +34,11 @@ public class CaseDataWorker implements ExternalTaskHandler {
 
         List<ErrandDTO> errandList = errandsClient.getErrandById(caseId);
 
-        StakeholderDTO stakeholderDTO = new PersonDTO();
-
         List<PersonDTO> personDTOList = errandList.stream()
                 .flatMap(errand -> errand.getStakeholders()
                         .stream()
                         .filter(stakeholder -> stakeholder.getType().getText().equals(StakeholderType.PERSON.getText())))
-                .map(stakeHolderDto -> (PersonDTO) stakeHolderDto)
+                .map(PersonDTO.class::cast)
                 .collect(Collectors.toList());
 
         Optional<PersonDTO> optionalPersonDTO = personDTOList.stream()
