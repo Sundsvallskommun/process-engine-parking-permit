@@ -6,6 +6,7 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import se.sundsvall.dept44.configuration.webclient.WebClientBuilder;
+import se.sundsvall.processengine.parkingpermit.integration.casedata.model.ErrandDTO;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class ErrandsClient {
         this.clientRegistration = clientRegistration;
     }
 
-    public List<Errand> getErrandById(String errandId){
+    public List<ErrandDTO> getErrandById(String errandId){
 
         WebClient webClient = new WebClientBuilder()
                 .withBaseUrl(caseDataErrandsUrl)
@@ -34,7 +35,7 @@ public class ErrandsClient {
                         .queryParam("id", errandId)
                         .build())
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<List<Errand>>() {
+                .bodyToMono(new ParameterizedTypeReference<List<ErrandDTO>>() {
                 })
                 .block();
     }

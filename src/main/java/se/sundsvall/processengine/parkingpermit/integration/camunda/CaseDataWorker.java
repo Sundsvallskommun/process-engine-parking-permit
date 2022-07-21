@@ -6,8 +6,14 @@ import org.camunda.bpm.client.task.ExternalTaskHandler;
 import org.camunda.bpm.client.task.ExternalTaskService;
 import org.springframework.stereotype.Component;
 import se.sundsvall.processengine.parkingpermit.integration.casedata.ErrandsClient;
+import se.sundsvall.processengine.parkingpermit.integration.casedata.enums.StakeholderRole;
+import se.sundsvall.processengine.parkingpermit.integration.casedata.enums.StakeholderType;
+import se.sundsvall.processengine.parkingpermit.integration.casedata.model.ErrandDTO;
+import se.sundsvall.processengine.parkingpermit.integration.casedata.model.PersonDTO;
+import se.sundsvall.processengine.parkingpermit.integration.casedata.model.StakeholderDTO;
 import se.sundsvall.processengine.parkingpermit.integration.citizen.CitizenClient;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 @ExternalTaskSubscription("caseData")
@@ -26,19 +32,24 @@ public class CaseDataWorker implements ExternalTaskHandler {
 
         String caseId = externalTask.getVariable("caseNumber");
 
+        List<ErrandDTO> errandList = errandsClient.getErrandById(caseId);
 
-        List<Errand> errandList = errandsClient.getErrandById(caseId);
+        StakeholderDTO stakeholderDTO = new PersonDTO();
 
-        Optional<String> personIdOptional = errandList.stream()
+        List<PersonDTO> personDTOList = errandList.stream()
                 .flatMap(errand -> errand.getStakeholders()
                         .stream()
-                        .filter(stakeholder -> stakeholder.getRoles().contains("APPLICANT"))
-                        .map(stakeholder -> stakeholder.getPersonId()))
-                .findAny();
+                        .filter(stakeholder -> stakeholder.getType().getText().equals(StakeholderType.PERSON.getText())))
+                .map(stakeHolderDto -> (PersonDTO) stakeHolderDto)
+                .collect(Collectors.toList());
 
-        String personId = personIdOptional.orElseThrow();
+        Optional<PersonDTO> optionalPersonDTO = personDTOList.stream()
+                .filter(person -> person.getRoles().contains(StakeholderRole.APPLICANT))
+                .findFirst();
 
-        boolean isPersonCitizen = citizenClient.isPersonCitizen(personId);
+        PersonDTO personDTO = optionalPersonDTO.orElseThrow();
+
+        boolean isPersonCitizen = citizenClient.isPersonCitizen(personDTO.getPersonId());
         Map<String,Object> camundaVariables = new HashMap<>();
         camundaVariables.put("isCitizen",isPersonCitizen);
 
